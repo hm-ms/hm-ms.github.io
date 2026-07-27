@@ -353,14 +353,30 @@ footer{border-top:1px solid var(--line);padding:60px 0 130px;background:var(--bg
   section{padding:64px 0}
 }
 </style>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window,document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','1482629200562720');
+fbq('track','PageView');
+</script>
+<!-- End Meta Pixel Code -->
 </head>
 <body>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1482629200562720&ev=PageView&noscript=1" alt="" /></noscript>
+
 <div class="grain"></div>
 
 <header id="hdr">
   <div class="wrap row">
     <div class="logo"><b>MS</b> TAEKWONDO<span>명성 태권도</span></div>
-    <a class="nav-cta book" href="#">방문상담 예약</a>
+    <a class="nav-cta book" href="#" data-meta-location="header">체험 수업 예약</a>
   </div>
 </header>
 
@@ -377,7 +393,7 @@ footer{border-top:1px solid var(--line);padding:60px 0 130px;background:var(--bg
     <div class="eng-mark">ADULT TAEKWONDO TRAINING</div>
 
     <div class="cta-group">
-      <a class="btn-primary book" href="#">성인 태권도 방문상담 예약 <span class="arrow">→</span></a>
+      <a class="btn-primary book" href="#" data-meta-location="hero">체험 수업 예약 <span class="arrow">→</span></a>
       <span class="free-tag">
         <span class="k">처음이어도 괜찮습니다</span>
         <span class="s">상담 후 나에게 맞는 시작 안내</span>
@@ -555,7 +571,7 @@ footer{border-top:1px solid var(--line);padding:60px 0 130px;background:var(--bg
     <div class="offer-box">
       <div class="kicker" style="color:var(--blue-bright)">MS TAEKWONDO</div>
       <p class="desc">말로만 듣는 것보다 <b>직접 분위기를 보는 것</b>이 가장 빠릅니다.<br>수업 방식, 운동 목적, 시작 방법을 편하게 상담해보세요.</p>
-      <a class="btn-primary book" href="#apply">성인 태권도 예약하기 <span class="arrow">→</span></a>
+      <a class="btn-primary book" href="#apply" data-meta-location="offer">체험 수업 예약 <span class="arrow">→</span></a>
     </div>
   </div>
 </section>
@@ -577,7 +593,7 @@ footer{border-top:1px solid var(--line);padding:60px 0 130px;background:var(--bg
       <div class="form-card">
         <h3>네이버에서 바로 예약</h3>
         <p class="ph">성인 태권도 방문상담 예약으로 이동합니다.</p>
-        <a class="btn-primary book" href="#" style="width:100%;justify-content:center;margin-top:14px">네이버 예약하기 <span class="arrow">→</span></a>
+        <a class="btn-primary book" href="#" data-meta-location="apply" style="width:100%;justify-content:center;margin-top:14px">체험 수업 예약 <span class="arrow">→</span></a>
         <p class="form-note">네이버 예약 → 시간 선택 → 방문상담</p>
       </div>
     </div>
@@ -614,7 +630,7 @@ footer{border-top:1px solid var(--line);padding:60px 0 130px;background:var(--bg
     <div class="kicker">START TODAY</div>
     <h2 class="h2">“이 나이에?” 라고 생각했다면,<br><span class="blue">지금이 시작할 때입니다.</span></h2>
     <p class="sub">망설이기보다 먼저 분위기를 확인해보세요. 성인 태권도는 생각보다 훨씬 재미있고, 오래갈 수 있습니다.</p>
-    <a class="btn-primary book" href="#" style="font-size:19px;padding:20px 36px">방문상담 예약하기 <span class="arrow">→</span></a>
+    <a class="btn-primary book" href="#" data-meta-location="final" style="font-size:19px;padding:20px 36px">체험 수업 예약 <span class="arrow">→</span></a>
   </div>
 </section>
 
@@ -638,7 +654,7 @@ footer{border-top:1px solid var(--line);padding:60px 0 130px;background:var(--bg
 
 <div class="sticky-bar">
   <div class="txt"><b>성인 태권도 방문상담</b><span>네이버 예약에서 시간을 선택하세요</span></div>
-  <a class="book" href="#">예약하기</a>
+  <a class="book" href="#" data-meta-location="sticky_bar">체험 수업 예약</a>
 </div>
 
 <script>
@@ -648,6 +664,17 @@ document.querySelectorAll('.book').forEach(a=>{
   a.setAttribute('href', BOOKING_URL);
   a.setAttribute('target','_blank');
   a.setAttribute('rel','noopener');
+});
+
+/* 메타 픽셀 — 모든 체험 수업 예약 버튼을 하나의 이벤트로 측정 */
+document.querySelectorAll('.book').forEach(a=>{
+  a.addEventListener('click',()=>{
+    if(typeof fbq !== 'function') return;
+    fbq('trackCustom','TrialBookingClick',{
+      button_location: a.dataset.metaLocation || 'unknown',
+      destination: 'naver_booking'
+    });
+  });
 });
 
 const hdr=document.getElementById('hdr');
