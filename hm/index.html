@@ -359,7 +359,7 @@ src="https://www.facebook.com/tr?id=1482629200562720&ev=PageView&noscript=1"
 <header id="hdr">
   <div class="wrap row">
     <div class="logo">HALF<b>MINUTE</b><span>미금점</span></div>
-    <a class="nav-cta book" href="#">3회 체험 신청</a>
+    <a class="nav-cta book" href="#" data-meta-event="TrialBookingClick" data-meta-location="header">3회 체험 신청</a>
   </div>
 </header>
 
@@ -512,7 +512,7 @@ src="https://www.facebook.com/tr?id=1482629200562720&ev=PageView&noscript=1"
       <div class="big">3<em>회</em></div>
       <div class="free">3회 체험</div>
       <p class="desc">말로는 모릅니다. <b>세 번 직접 해보고</b> 결정하세요.<br>등록 강요 없이, 진짜 수업 그대로 경험합니다.</p>
-      <a class="btn-primary book" href="#apply">3회 체험 신청 <span class="arrow">→</span></a>
+      <a class="btn-primary book" href="#apply" data-meta-event="TrialBookingClick" data-meta-location="offer">3회 체험 신청 <span class="arrow">→</span></a>
     </div>
   </div>
 </section>
@@ -535,7 +535,7 @@ src="https://www.facebook.com/tr?id=1482629200562720&ev=PageView&noscript=1"
       <div class="form-card">
         <h3>네이버에서 바로 예약</h3>
         <p class="ph">원하는 요일·시간을 직접 선택하면 끝이에요.</p>
-        <a class="btn-primary book" href="#" style="width:100%;justify-content:center;margin-top:14px">네이버 예약하기 <span class="arrow">→</span></a>
+        <a class="btn-primary book" href="#" data-meta-event="TrialBookingClick" data-meta-location="apply" style="width:100%;justify-content:center;margin-top:14px">네이버 예약하기 <span class="arrow">→</span></a>
         <p class="form-note">네이버 예약 → 시간 선택 → 완료</p>
       </div>
     </div>
@@ -570,7 +570,7 @@ src="https://www.facebook.com/tr?id=1482629200562720&ev=PageView&noscript=1"
     <div class="kicker">START TODAY</div>
     <h2 class="h2">고민하는 3일보다,<br><span class="blue">함께하는 첫 30초.</span></h2>
     <p class="sub">남은 자리는 한정되어 있습니다. 지금 시간을 잡아두세요.</p>
-    <a class="btn-primary book" href="#" style="font-size:19px;padding:20px 36px">3회 체험 신청 <span class="arrow">→</span></a>
+    <a class="btn-primary book" href="#" data-meta-event="TrialBookingClick" data-meta-location="final" style="font-size:19px;padding:20px 36px">3회 체험 신청 <span class="arrow">→</span></a>
   </div>
 </section>
 
@@ -595,7 +595,7 @@ src="https://www.facebook.com/tr?id=1482629200562720&ev=PageView&noscript=1"
 <!-- ============ 모바일 고정 예약바 ============ -->
 <div class="sticky-bar">
   <div class="txt"><b>3회 체험</b><span>등록 강요 없이, 두 번 직접 해보세요</span></div>
-  <a class="book" href="#">3회 체험 신청</a>
+  <a class="book" href="#" data-meta-event="TrialBookingClick" data-meta-location="sticky_bar">3회 체험 신청</a>
 </div>
 
 <script>
@@ -610,6 +610,17 @@ document.querySelectorAll('.book').forEach(a=>{
   a.setAttribute('href', BOOKING_URL);
   a.setAttribute('target','_blank');
   a.setAttribute('rel','noopener');
+});
+
+/* 메타 픽셀 — CTA 종류와 위치를 구분해 클릭 측정 */
+document.querySelectorAll('[data-meta-event]').forEach(a=>{
+  a.addEventListener('click',()=>{
+    if(typeof fbq !== 'function') return;
+    fbq('trackCustom', a.dataset.metaEvent, {
+      button_location: a.dataset.metaLocation,
+      destination: 'naver_booking'
+    });
+  });
 });
 
 /* 헤더 스크롤 시 음영 강화 */
